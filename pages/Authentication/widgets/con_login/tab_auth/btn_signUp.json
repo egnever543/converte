@@ -28,10 +28,10 @@
   "isLoading": false,
   "isVisible": true,
   "key": "d80868s2dr",
-  "leftColumn": 6,
+  "leftColumn": 5,
   "onClick": "{{functions.register();}}",
-  "originalBottomRow": 50,
-  "originalTopRow": 44,
+  "originalBottomRow": 56,
+  "originalTopRow": 50,
   "parentColumnSpace": 18.1875,
   "parentId": "f5yn1hxqze",
   "parentRowSpace": 10,
@@ -39,7 +39,7 @@
   "recaptchaType": "V3",
   "renderMode": "CANVAS",
   "resetFormOnClick": false,
-  "rightColumn": 57,
+  "rightColumn": 56,
   "searchTags": [
     "click",
     "submit"

@@ -1,5 +1,4 @@
 export default {
-
 	defaultTab: 'Sign In',
 
 	setDefaultTab: (newTab) => {
@@ -11,7 +10,7 @@ export default {
 	},
 
 	verifyHash: async (password, hash) => {
-		return dcodeIO.bcrypt.compareSync(password, hash)
+		return dcodeIO.bcrypt.compareSync(password, hash);
 	},
 
 	createToken: async (user) => {
@@ -20,28 +19,40 @@ export default {
 
 	signIn: async () => {
 		const password = inp_password.text;
+		const users = await findUserByEmail.run();
 
-		const [user] = await findUserByEmail.run();
-
-		if (user && this.verifyHash(password, user?.password_hash)) {
-			storeValue('token', await this.createToken(user))
-				.then(() => updateLogin.run({
-				id: user.id
-			}))
-				.then(() => showAlert('Register Success', 'success'))
+		if (users && users.length > 0) {
+			const user = users[0];
+			if (await this.verifyHash(password, user?.password_hash)) {
+				await storeValue('token', await this.createToken(user));
+				// REMOVIDO: await updateLogin.run({ email: user.email });
+				showAlert('Login successful!', 'success');
+			} else {
+				return showAlert('Invalid email/password combination', 'error');
+			}
 		} else {
-			return showAlert('Invalid emaill/password combination', 'error');
+			return showAlert('Invalid email/password combination', 'error');
 		}
 	},
 
 	register: async () => {
 		const passwordHash = await this.generatePasswordHash();
-		const [user] = await createUser.run({passwordHash});
-		if (user) {
-			storeValue('token', await this.createToken(user))
-			showAlert('Register Success', 'success');
-		} else {
-			return showAlert('Error creating new user', 'error');
+		
+		try {
+			const result = await createUser.run({passwordHash});
+			if (result) {
+				const user = {
+					first_name: inp_firstName.text,
+					last_name: inp_lastName.text,
+					email: inp_registerEmail.text,
+					role: 'Admin'
+				};
+				await storeValue('token', await this.createToken(user));
+				showAlert('Registration successful!', 'success');
+			}
+		} catch (error) {
+			console.error(error);
+			return showAlert('Error creating account', 'error');
 		}
 	},
 }
