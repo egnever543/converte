@@ -1,7 +1,7 @@
 {
   "appIsExample": false,
   "appLayout": {
-    "type": "FLUID"
+    "type": "DESKTOP"
   },
   "applicationDetail": {
     "appPositioning": {
@@ -22,10 +22,14 @@
     {
       "id": "Authentication",
       "isDefault": true
+    },
+    {
+      "id": "Dashboard",
+      "isDefault": false
     }
   ],
   "unpublishedAppLayout": {
-    "type": "FLUID"
+    "type": "DESKTOP"
   },
   "unpublishedApplicationDetail": {
     "appPositioning": {

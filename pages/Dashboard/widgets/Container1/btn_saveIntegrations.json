@@ -1,12 +1,11 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 58,
+  "bottomRow": 21,
   "boxShadow": "none",
   "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
-  "buttonVariant": "TERTIARY",
+  "buttonVariant": "PRIMARY",
   "disabledWhenInvalid": false,
-  "displayName": "Button",
   "dynamicBindingPathList": [
     {
       "key": "buttonColor"
@@ -25,43 +24,32 @@
       "key": "onClick"
     }
   ],
-  "hideCard": false,
-  "iconSVG": "https://appcdn.appsmith.com/static/media/icon.05d209fafeb13a8569e3b4e97069d9ee.svg",
   "isDefaultClickDisabled": true,
-  "isDeprecated": false,
   "isDisabled": false,
   "isLoading": false,
   "isVisible": true,
-  "key": "w5le6pkfax",
-  "leftColumn": 2,
+  "key": "rbi4g1bdf1",
+  "leftColumn": 24,
   "minWidth": 120,
-  "mobileBottomRow": 95,
-  "mobileLeftColumn": 41,
-  "mobileRightColumn": 57,
-  "mobileTopRow": 91,
-  "onClick": "{{functions.setDefaultTab('Sign Up')}}",
-  "originalBottomRow": 51,
-  "originalTopRow": 47,
-  "parentColumnSpace": 19.8125,
-  "parentId": "8rq3ao3yqz",
+  "mobileBottomRow": 21,
+  "mobileLeftColumn": 24,
+  "mobileRightColumn": 40,
+  "mobileTopRow": 17,
+  "needsErrorInfo": false,
+  "onClick": "{{\n  updateUserIntegrations.run()\n    .then(() => {\n      showAlert('Dados salvos com sucesso!', 'success');\n      getUserData.run();\n    })\n    .catch((error) => {\n      console.error(error);\n      showAlert('Erro ao salvar dados', 'error');\n    })\n}}",
+  "parentColumnSpace": 19.5,
+  "parentId": "qdstx8wzr2",
   "parentRowSpace": 10,
   "placement": "CENTER",
   "recaptchaType": "V3",
   "renderMode": "CANVAS",
   "resetFormOnClick": false,
   "responsiveBehavior": "hug",
-  "rightColumn": 58,
-  "searchTags": [
-    "click",
-    "submit"
-  ],
-  "tags": [
-    "Buttons"
-  ],
-  "text": "Don't have an account? Sign Up",
-  "topRow": 54,
+  "rightColumn": 40,
+  "text": "SALVAR INTEGRAÇÕES",
+  "topRow": 17,
   "type": "BUTTON_WIDGET",
   "version": 1,
-  "widgetId": "6mx5oq7on0",
-  "widgetName": "btn_navigateToSignUp"
+  "widgetId": "mkqdgb2gt6",
+  "widgetName": "btn_saveIntegrations"
 }

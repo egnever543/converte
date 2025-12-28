@@ -25,8 +25,8 @@ export default {
 			const user = users[0];
 			if (await this.verifyHash(password, user?.password_hash)) {
 				await storeValue('token', await this.createToken(user));
-				// REMOVIDO: await updateLogin.run({ email: user.email });
 				showAlert('Login successful!', 'success');
+				navigateTo('Dashboard');
 			} else {
 				return showAlert('Invalid email/password combination', 'error');
 			}
@@ -49,10 +49,11 @@ export default {
 				};
 				await storeValue('token', await this.createToken(user));
 				showAlert('Registration successful!', 'success');
+				navigateTo('Dashboard');
 			}
 		} catch (error) {
 			console.error(error);
 			return showAlert('Error creating account', 'error');
 		}
-	},
+	}
 }
