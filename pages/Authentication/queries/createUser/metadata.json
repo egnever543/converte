@@ -32,7 +32,7 @@
           "data": "{\n  \"first_name\": {{inp_firstName.text}},\n  \"last_name\": {{inp_lastName.text}},\n  \"email\": {{inp_registerEmail.text}},\n  \"password_hash\": {{this.params.passwordHash}},\n  \"role\": \"Admin\",\n  \"created_at\": {{new Date().toISOString()}}\n}"
         },
         "sheetName": {
-          "data": "Página1"
+          "data": "CADASTRO"
         },
         "sheetUrl": {
           "data": "https://docs.google.com/spreadsheets/d/1jc2HEfaFmViFfxDRAcu2Ebr3gdrOGTEHaRVHgDXKw60/edit"

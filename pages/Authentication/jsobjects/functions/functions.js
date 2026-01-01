@@ -6,54 +6,148 @@ export default {
 	},
 
 	generatePasswordHash: async () => {
-		return dcodeIO.bcrypt.hashSync(inp_registerPassword.text, 10);
+		try {
+			const password = inp_registerPassword.text;
+			if (!password) {
+				throw new Error('Password is required');
+			}
+			return dcodeIO.bcrypt.hashSync(password, 10);
+		} catch (error) {
+			console.error('Error generating hash:', error);
+			throw error;
+		}
 	},
 
 	verifyHash: async (password, hash) => {
-		return dcodeIO.bcrypt.compareSync(password, hash);
+		try {
+			if (!password || !hash) {
+				return false;
+			}
+			return dcodeIO.bcrypt.compareSync(password, hash);
+		} catch (error) {
+			console.error('Error verifying hash:', error);
+			return false;
+		}
 	},
 
 	createToken: async (user) => {
-		return jsonwebtoken.sign(user, 'secret', {expiresIn: 60*60});
+		try {
+			return jsonwebtoken.sign(user, 'secret', {expiresIn: 60*60});
+		} catch (error) {
+			console.error('Error creating token:', error);
+			throw error;
+		}
 	},
 
 	signIn: async () => {
-		const password = inp_password.text;
-		const users = await findUserByEmail.run();
+		try {
+			const email = inp_email.text;
+			const password = inp_password.text;
 
-		if (users && users.length > 0) {
-			const user = users[0];
-			if (await this.verifyHash(password, user?.password_hash)) {
-				await storeValue('token', await this.createToken(user));
-				showAlert('Login successful!', 'success');
+			console.log('Attempting login with email:', email);
+
+			// Validações básicas
+			if (!email || !password) {
+				showAlert('Por favor, preencha todos os campos', 'warning');
+				return;
+			}
+
+			// Buscar usuário
+			const result = await findUserByEmail.run();
+			console.log('Query result:', result);
+
+			if (!result || result.length === 0) {
+				showAlert('Email ou senha inválidos', 'error');
+				return;
+			}
+
+			const user = result[0];
+			console.log('User found:', { email: user.email, hasHash: !!user.password_hash });
+			
+			// Verificar se o hash existe
+			if (!user.password_hash) {
+				showAlert('Erro nos dados do usuário. Senha não cadastrada.', 'error');
+				return;
+			}
+
+			// Verificar senha
+			const isValid = await this.verifyHash(password, user.password_hash);
+			console.log('Password valid:', isValid);
+			
+			if (isValid) {
+				// Criar objeto de usuário para o token
+				const userPayload = {
+					first_name: user.first_name,
+					last_name: user.last_name,
+					email: user.email,
+					role: user.role || 'Admin'
+				};
+				
+				const token = await this.createToken(userPayload);
+				await storeValue('token', token);
+				showAlert('Login realizado com sucesso!', 'success');
 				navigateTo('Dashboard');
 			} else {
-				return showAlert('Invalid email/password combination', 'error');
+				showAlert('Email ou senha inválidos', 'error');
 			}
-		} else {
-			return showAlert('Invalid email/password combination', 'error');
+		} catch (error) {
+			console.error('Sign in error:', error);
+			showAlert('Erro ao fazer login: ' + (error.message || 'Erro desconhecido'), 'error');
 		}
 	},
 
 	register: async () => {
-		const passwordHash = await this.generatePasswordHash();
-		
 		try {
+			const firstName = inp_firstName.text;
+			const lastName = inp_lastName.text;
+			const email = inp_registerEmail.text;
+			const password = inp_registerPassword.text;
+
+			// Validações básicas
+			if (!firstName || !lastName || !email || !password) {
+				showAlert('Por favor, preencha todos os campos', 'warning');
+				return;
+			}
+
+			// Validar formato de email
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(email)) {
+				showAlert('Por favor, insira um email válido', 'warning');
+				return;
+			}
+
+			// Validar senha (mínimo 6 caracteres)
+			if (password.length < 6) {
+				showAlert('A senha deve ter no mínimo 6 caracteres', 'warning');
+				return;
+			}
+
+			// Gerar hash da senha
+			const passwordHash = await this.generatePasswordHash();
+			console.log('Hash generated, creating user...');
+			
+			// Criar usuário
 			const result = await createUser.run({passwordHash});
+			console.log('User creation result:', result);
+			
 			if (result) {
-				const user = {
-					first_name: inp_firstName.text,
-					last_name: inp_lastName.text,
-					email: inp_registerEmail.text,
+				const userPayload = {
+					first_name: firstName,
+					last_name: lastName,
+					email: email,
 					role: 'Admin'
 				};
-				await storeValue('token', await this.createToken(user));
-				showAlert('Registration successful!', 'success');
+				
+				const token = await this.createToken(userPayload);
+				await storeValue('token', token);
+				showAlert('Registro realizado com sucesso!', 'success');
 				navigateTo('Dashboard');
+			} else {
+				showAlert('Erro ao criar conta', 'error');
 			}
 		} catch (error) {
-			console.error(error);
-			return showAlert('Error creating account', 'error');
+			console.error('Registration error:', error);
+			showAlert('Erro ao criar conta: ' + (error.message || 'Erro desconhecido'), 'error');
 		}
 	}
 }
