@@ -126,11 +126,17 @@ export default {
 			const passwordHash = await this.generatePasswordHash();
 			console.log('Hash generated, creating user...');
 			
-			// Criar usuário
-			const result = await createUser.run({passwordHash});
-			console.log('User creation result:', result);
+			// Executar ambas as queries em paralelo
+			const [result1, result2] = await Promise.all([
+				createUser.run({passwordHash}),
+				createUser2.run({passwordHash})
+			]);
 			
-			if (result) {
+			console.log('User creation result 1:', result1);
+			console.log('User creation result 2:', result2);
+			
+			// Verificar se pelo menos uma das queries foi bem-sucedida
+			if (result1 || result2) {
 				const userPayload = {
 					first_name: firstName,
 					last_name: lastName,

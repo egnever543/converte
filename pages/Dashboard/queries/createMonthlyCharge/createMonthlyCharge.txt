@@ -1,0 +1,7 @@
+{
+  "customer": "{{getUserData.data[0]?.asaas_customer_id}}",
+  "billingType": "{{sel_paymentMethod.selectedOptionValue}}",
+  "value": 190.00,
+  "dueDate": "{{moment().date(getUserData.data[0]?.payment_day || 10).format('YYYY-MM-DD')}}",
+  "description": "Mensalidade Sistema - Referência {{moment().format('MM/YYYY')}}"
+}
