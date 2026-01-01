@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "695120f12f759c6ceec4ba2f_69adac33-a316-417e-8b52-5790b1ab466b",
+  "id": "Dashboard_payment",
+  "unpublishedCollection": {
+    "name": "payment",
+    "pageId": "Dashboard",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

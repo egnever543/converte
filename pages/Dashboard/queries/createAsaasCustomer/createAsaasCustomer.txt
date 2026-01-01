@@ -1,0 +1,6 @@
+{
+  "name": "{{auth.getUser()?.first_name + ' ' + auth.getUser()?.last_name}}",
+  "email": "{{auth.getUser()?.email}}",
+  "cpfCnpj": "{{inp_cpf.text.replace(/\\D/g, '')}}",
+  "mobilePhone": "{{inp_phone.text.replace(/\\D/g, '')}}"
+}

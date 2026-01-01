@@ -29,7 +29,7 @@
           "data": ""
         },
         "rowObjects": {
-          "data": "[{\n  \"rowIndex\": {{getUserData.data?.[0]?.rowIndex}},\n  \"id_chatwoot\": {{inp_id_chatwoot.text}},\n  \"token_chatwoot\": {{inp_token_chatwoot.text}},\n  \"appkey\": {{inp_appkey.text}},\n  \"authkey\": {{inp_authkey.text}},\n  \"script_url\": {{inp_script_url.text}},\n  \"grupo\": {{inp_grupo.text}},\n  \"id_sigma\": {{inp_id_sigma.text}}\n}]"
+          "data": "[{\n  \"rowIndex\": {{getUserData.data?.[0]?.rowIndex}},\n  \"id_chatwoot\": {{inp_id_chatwoot.text}},\n  \"token_chatwoot\": {{inp_token_chatwoot.text}},\n  \"appkey\": {{inp_appkey.text}},\n  \"authkey\": {{inp_authkey.text}},\n  \"script_url\": {{inp_script_url.text}},\n  \"grupo\": {{inp_grupo.text}},\n  \"id_sigma\": {{inp_id_sigma.text}},\n  \"asaas_customer_id\": {{this.params.asaas_customer_id || getUserData.data[0]?.asaas_customer_id}},\n  \"payment_status\": {{this.params.payment_status || getUserData.data[0]?.payment_status}},\n  \"payment_day\": {{this.params.payment_day || getUserData.data[0]?.payment_day}},\n  \"last_payment_date\": {{this.params.last_payment_date || getUserData.data[0]?.last_payment_date}}\n}]\n"
         },
         "sheetName": {
           "data": "CHATWOOT INFOS"
