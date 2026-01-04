@@ -32,6 +32,8 @@
   "mobileTopRow": 17,
   "needsErrorInfo": false,
   "onClick": "{{\n  updateUserIntegrations.run()\n    .then(() => {\n      showAlert('Dados salvos com sucesso!', 'success');\n      getUserData.run();\n    })\n    .catch((error) => {\n      console.error(error);\n      showAlert('Erro ao salvar dados', 'error');\n    })\n}}",
+  "originalBottomRow": 21,
+  "originalTopRow": 17,
   "parentColumnSpace": 19.5,
   "parentId": "qdstx8wzr2",
   "parentRowSpace": 10,

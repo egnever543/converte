@@ -43,7 +43,7 @@
   "renderMode": "CANVAS",
   "resetFormOnClick": false,
   "responsiveBehavior": "hug",
-  "rightColumn": 41,
+  "rightColumn": 44,
   "text": "🔄 REINICIAR",
   "topRow": 0,
   "type": "BUTTON_WIDGET",
