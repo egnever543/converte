@@ -5,7 +5,7 @@
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "bottomRow": 8,
   "boxShadow": "none",
-  "defaultText": "Anotação",
+  "defaultText": "",
   "dynamicBindingPathList": [
     {
       "key": "accentColor"
@@ -41,6 +41,7 @@
   "parentColumnSpace": 17.84375,
   "parentId": "i6w3g81jo8",
   "parentRowSpace": 10,
+  "placeholderText": "Anotação",
   "renderMode": "CANVAS",
   "resetOnSubmit": true,
   "responsiveBehavior": "fill",
