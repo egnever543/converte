@@ -1,16 +1,13 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 52,
+  "bottomRow": 45,
   "boxShadow": "none",
-  "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
+  "buttonColor": "#231f20",
   "buttonVariant": "PRIMARY",
   "disabledWhenInvalid": false,
   "displayName": "Button",
   "dynamicBindingPathList": [
-    {
-      "key": "buttonColor"
-    },
     {
       "key": "borderRadius"
     }
@@ -30,8 +27,8 @@
   "key": "d80868s2dr",
   "leftColumn": 2,
   "onClick": "{{functions.signIn();}}",
-  "originalBottomRow": 45,
-  "originalTopRow": 39,
+  "originalBottomRow": 46,
+  "originalTopRow": 40,
   "parentColumnSpace": 18.1875,
   "parentId": "8rq3ao3yqz",
   "parentRowSpace": 10,
@@ -45,7 +42,7 @@
     "submit"
   ],
   "text": "SIGN IN",
-  "topRow": 46,
+  "topRow": 39,
   "type": "BUTTON_WIDGET",
   "version": 1,
   "widgetId": "voz3dh2wjt",

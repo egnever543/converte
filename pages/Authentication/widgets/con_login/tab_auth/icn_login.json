@@ -1,16 +1,12 @@
 {
   "animateLoading": true,
   "borderRadius": "1.5rem",
-  "bottomRow": 11,
+  "bottomRow": 21,
   "boxShadow": "none",
-  "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
+  "buttonColor": "#18181b",
   "buttonVariant": "PRIMARY",
   "displayName": "Icon Button",
-  "dynamicBindingPathList": [
-    {
-      "key": "buttonColor"
-    }
-  ],
+  "dynamicBindingPathList": [],
   "dynamicTriggerPathList": [],
   "hideCard": false,
   "iconName": "lock",
@@ -25,12 +21,12 @@
   "parentId": "8rq3ao3yqz",
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
-  "rightColumn": 10,
+  "rightColumn": 9,
   "searchTags": [
     "click",
     "submit"
   ],
-  "topRow": 6,
+  "topRow": 16,
   "type": "ICON_BUTTON_WIDGET",
   "version": 1,
   "widgetId": "6zuo29nk37",

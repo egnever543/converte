@@ -41,6 +41,8 @@
   "mobileRightColumn": 40,
   "mobileTopRow": 9,
   "needsErrorInfo": false,
+  "originalBottomRow": 18,
+  "originalTopRow": 13,
   "overflow": "NONE",
   "parentColumnSpace": 19.5,
   "parentId": "llxszkokca",

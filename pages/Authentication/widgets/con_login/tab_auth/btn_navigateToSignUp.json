@@ -1,16 +1,13 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 58,
+  "bottomRow": 51,
   "boxShadow": "none",
-  "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
+  "buttonColor": "#1d4ed8",
   "buttonVariant": "TERTIARY",
   "disabledWhenInvalid": false,
   "displayName": "Button",
   "dynamicBindingPathList": [
-    {
-      "key": "buttonColor"
-    },
     {
       "key": "borderRadius"
     }
@@ -40,8 +37,8 @@
   "mobileRightColumn": 57,
   "mobileTopRow": 91,
   "onClick": "{{functions.setDefaultTab('Sign Up')}}",
-  "originalBottomRow": 51,
-  "originalTopRow": 47,
+  "originalBottomRow": 52,
+  "originalTopRow": 48,
   "parentColumnSpace": 19.8125,
   "parentId": "8rq3ao3yqz",
   "parentRowSpace": 10,
@@ -59,7 +56,7 @@
     "Buttons"
   ],
   "text": "Don't have an account? Sign Up",
-  "topRow": 54,
+  "topRow": 47,
   "type": "BUTTON_WIDGET",
   "version": 1,
   "widgetId": "6mx5oq7on0",

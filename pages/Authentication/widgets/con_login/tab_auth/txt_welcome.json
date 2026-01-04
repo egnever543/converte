@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 27,
+  "bottomRow": 25,
   "displayName": "Text",
   "dynamicBindingPathList": [
     {
@@ -29,8 +29,8 @@
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
-  "originalBottomRow": 20,
-  "originalTopRow": 16,
+  "originalBottomRow": 26,
+  "originalTopRow": 21,
   "overflow": "NONE",
   "parentColumnSpace": 19.5,
   "parentId": "8rq3ao3yqz",
@@ -47,7 +47,7 @@
   "text": "Welcome back! Please enter your details.",
   "textAlign": "LEFT",
   "textColor": "#231F20",
-  "topRow": 16,
+  "topRow": 21,
   "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
   "type": "TEXT_WIDGET",
   "version": 1,

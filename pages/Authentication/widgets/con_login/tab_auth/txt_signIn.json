@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 16,
+  "bottomRow": 21,
   "displayName": "Text",
   "dynamicBindingPathList": [
     {
@@ -19,7 +19,7 @@
   "isLoading": false,
   "isVisible": true,
   "key": "tcimoejkol",
-  "leftColumn": 2,
+  "leftColumn": 11,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "overflow": "NONE",
@@ -27,7 +27,7 @@
   "parentId": "8rq3ao3yqz",
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
-  "rightColumn": 32,
+  "rightColumn": 41,
   "searchTags": [
     "typography",
     "paragraph",
@@ -37,7 +37,7 @@
   "text": "Sign In",
   "textAlign": "LEFT",
   "textColor": "#231F20",
-  "topRow": 11,
+  "topRow": 16,
   "truncateButtonColor": "#FFC13D",
   "type": "TEXT_WIDGET",
   "version": 1,
