@@ -201,7 +201,7 @@ export default {
 	// BUSCAR QR CODE
 	// ============================================
 	
-	getQRCode: async (instanceName) => {
+getQRCode: async (instanceName) => {
 	try {
 		showAlert('📱 Buscando QR Code...', 'info');
 		
@@ -209,10 +209,47 @@ export default {
 			instanceName: instanceName
 		});
 		
+		// DEBUG: Ver o que a API retornou
+		console.log('🔍 RESPOSTA COMPLETA DA API:', JSON.stringify(result, null, 2));
+		
+		// Tentar diferentes formatos de resposta da Evolution API
+		let base64Image = null;
+		
+		// Formato 1: {base64: "..."}
 		if (result && result.base64) {
+			base64Image = result.base64;
+			console.log('✅ Formato 1: result.base64');
+		}
+		// Formato 2: {qrcode: {base64: "..."}}
+		else if (result && result.qrcode && result.qrcode.base64) {
+			base64Image = result.qrcode.base64;
+			console.log('✅ Formato 2: result.qrcode.base64');
+		}
+		// Formato 3: {qr: {base64: "..."}}
+		else if (result && result.qr && result.qr.base64) {
+			base64Image = result.qr.base64;
+			console.log('✅ Formato 3: result.qr.base64');
+		}
+		// Formato 4: String pura
+		else if (typeof result === 'string' && result.startsWith('iVBOR')) {
+			base64Image = result;
+			console.log('✅ Formato 4: String pura');
+		}
+		// Formato 5: {pairingCode: "...", qr: {base64: "..."}}
+		else if (result && result.qr) {
+			base64Image = result.qr;
+			console.log('✅ Formato 5: result.qr direto');
+		}
+		
+		console.log('📷 Base64 extraído:', base64Image ? `${base64Image.substring(0, 50)}...` : 'NÃO ENCONTRADO');
+		console.log('📏 Tamanho do base64:', base64Image ? base64Image.length : 0);
+		
+		if (base64Image && base64Image.length > 100) {
 			// Salvar no store
-			await storeValue('currentQRCode', result.base64);
+			await storeValue('currentQRCode', base64Image);
 			await storeValue('currentInstanceName', instanceName);
+			
+			console.log('💾 Salvou no store!');
 			
 			// Abrir modal
 			showModal('mdl_qrCode');
@@ -221,15 +258,14 @@ export default {
 		} else if (result && result.code === 'INSTANCE_ALREADY_CONNECTED') {
 			showAlert('✅ Instância já está conectada!', 'success');
 			
-		} else if (result && result.message) {
-			showAlert('⚠️ ' + result.message, 'warning');
-			
 		} else {
-			showAlert('⚠️ QR Code não disponível', 'warning');
+			console.error('❌ ERRO: Nenhum base64 válido encontrado');
+			console.error('📋 Estrutura completa:', result);
+			showAlert('⚠️ QR Code não disponível. Veja o console (F12) para detalhes.', 'warning');
 		}
 		
 	} catch (error) {
-		console.error('Erro ao buscar QR Code:', error);
+		console.error('❌ Erro ao buscar QR Code:', error);
 		showAlert('❌ Erro ao buscar QR Code: ' + error.message, 'error');
 	}
 },
