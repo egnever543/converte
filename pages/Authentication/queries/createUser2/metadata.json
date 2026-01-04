@@ -29,7 +29,7 @@
           "data": ""
         },
         "rowObjects": {
-          "data": "// rowObjects:\n{\n  \"email\": {{inp_registerEmail.text}},\n  \"asaas_customer_id\": {{this.params.asaasCustomerId}},\n  \"payment_day\": {{this.params.paymentDay}},\n  \"payment_status\": \"Não configurado\"\n}"
+          "data": "{\n  \"email\": {{inp_registerEmail.text}},\n  \"asaas_customer_id\": {{this.params.asaasCustomerId}},\n  \"payment_day\": {{this.params.paymentDay}},\n  \"payment_status\": \"Não configurado\"\n}"
         },
         "sheetName": {
           "data": "CHATWOOT INFOS"
