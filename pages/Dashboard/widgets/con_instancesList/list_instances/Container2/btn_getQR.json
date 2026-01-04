@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 8,
+  "bottomRow": 4,
   "boxShadow": "none",
   "buttonColor": "#3b82f6",
   "buttonVariant": "PRIMARY",
@@ -51,7 +51,7 @@
   "responsiveBehavior": "hug",
   "rightColumn": 30,
   "text": "📱 QR CODE",
-  "topRow": 4,
+  "topRow": 0,
   "type": "BUTTON_WIDGET",
   "version": 1,
   "widgetId": "ynhy3xixg1",

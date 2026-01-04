@@ -14,24 +14,32 @@
     },
     {
       "key": "text"
+    },
+    {
+      "key": "textColor"
     }
   ],
   "dynamicHeight": "FIXED",
+  "dynamicPropertyPathList": [
+    {
+      "key": "textColor"
+    }
+  ],
   "dynamicTriggerPathList": [],
   "fontFamily": "{{appsmith.theme.fontFamily.appFont}}",
   "fontSize": "1rem",
   "fontStyle": "BOLD",
   "isLoading": false,
   "isVisible": true,
-  "key": "q4qfxlx9k0",
-  "leftColumn": 19,
+  "key": "adr3jvg34c",
+  "leftColumn": 5,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
-  "mobileBottomRow": 7,
-  "mobileLeftColumn": 20,
-  "mobileRightColumn": 36,
-  "mobileTopRow": 3,
+  "mobileBottomRow": 11,
+  "mobileLeftColumn": 46,
+  "mobileRightColumn": 62,
+  "mobileTopRow": 7,
   "needsErrorInfo": false,
   "overflow": "NONE",
   "parentColumnSpace": 17.84375,
@@ -39,15 +47,15 @@
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 30,
+  "rightColumn": 17,
   "shouldTruncate": false,
-  "text": "{{whatsappManager.getStatusText(currentItem.evolution_status)}}",
-  "textAlign": "LEFT",
-  "textColor": "#231F20",
+  "text": "{{currentItem.groups_blocked === true ? '🚫 Grupos bloqueados' : currentItem.groups_blocked === false ? '✅ Grupos permitidos' : ''}}",
+  "textAlign": "CENTER",
+  "textColor": "{{currentItem.groups_blocked === true ? '#ef4444' : '#22c55e'}}\n",
   "topRow": 4,
   "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
   "type": "TEXT_WIDGET",
   "version": 1,
-  "widgetId": "zzsxhx3290",
-  "widgetName": "txt_instanceStatus"
+  "widgetId": "r9msmu44fw",
+  "widgetName": "txt_groupsStatus"
 }

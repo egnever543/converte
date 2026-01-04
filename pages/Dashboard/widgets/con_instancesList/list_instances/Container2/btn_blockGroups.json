@@ -3,18 +3,30 @@
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
   "bottomRow": 4,
   "boxShadow": "none",
-  "buttonColor": "#ef4444",
+  "buttonColor": "{{currentItem.groups_blocked ? '#22c55e' : '#9333ea'}}",
   "buttonVariant": "PRIMARY",
   "disabledWhenInvalid": false,
   "dynamicBindingPathList": [
     {
       "key": "borderRadius"
+    },
+    {
+      "key": "text"
+    },
+    {
+      "key": "buttonColor"
+    },
+    {
+      "key": "tooltip"
     }
   ],
   "dynamicHeight": "FIXED",
   "dynamicPropertyPathList": [
     {
       "key": "onClick"
+    },
+    {
+      "key": "buttonColor"
     }
   ],
   "dynamicTriggerPathList": [
@@ -22,19 +34,20 @@
       "key": "onClick"
     }
   ],
+  "iconAlign": "left",
   "isDefaultClickDisabled": true,
   "isDisabled": false,
   "isLoading": false,
   "isVisible": true,
-  "key": "it0jihw9fs",
-  "leftColumn": 41,
+  "key": "nj2x7l4pvy",
+  "leftColumn": 50,
   "minWidth": 120,
   "mobileBottomRow": 8,
-  "mobileLeftColumn": 35,
-  "mobileRightColumn": 51,
+  "mobileLeftColumn": 48,
+  "mobileRightColumn": 64,
   "mobileTopRow": 4,
   "needsErrorInfo": false,
-  "onClick": "{{whatsappManager.deleteInstance(currentItem.name, currentItem.chatwoot_id)}}",
+  "onClick": "{{whatsappManager.toggleBlockGroups(currentItem.name)}}",
   "parentColumnSpace": 17.84375,
   "parentId": "i6w3g81jo8",
   "parentRowSpace": 10,
@@ -43,11 +56,12 @@
   "renderMode": "CANVAS",
   "resetFormOnClick": false,
   "responsiveBehavior": "hug",
-  "rightColumn": 50,
-  "text": "🗑️ DELETAR",
+  "rightColumn": 62,
+  "text": "{{currentItem.groups_blocked ? '🔓 DESBLOQUEAR GRUPOS' : '🚫 BLOQUEAR GRUPOS'}}",
+  "tooltip": "{{currentItem.groups_blocked ? 'Clique para desbloquear grupos' : 'Clique para bloquear grupos'}}",
   "topRow": 0,
   "type": "BUTTON_WIDGET",
   "version": 1,
-  "widgetId": "28n61muis3",
-  "widgetName": "btn_delete"
+  "widgetId": "fopsnnmqpw",
+  "widgetName": "btn_blockGroups"
 }
