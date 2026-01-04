@@ -17,84 +17,93 @@ export default {
 		};
 	},
 	
+	// ============================================
+	// LISTAR INSTÂNCIAS
+	// ============================================
+	
 	getAllInstances: async () => {
-	try {
-		showAlert('Carregando instâncias...', 'info');
-		
-		// Buscar dados do Chatwoot e Evolution
-		const [chatwootResult, evolutionResult] = await Promise.all([
-			listChatwootInboxes.run(),
-			listEvolutionInstances.run()
-		]);
-		
-		const chatwootInboxes = chatwootResult.payload || chatwootResult;
-		const evolutionInstances = Array.isArray(evolutionResult) ? evolutionResult : [];
-		
-		// Combinar dados e buscar settings
-		const instancesPromises = chatwootInboxes.map(async inbox => {
-			const evolutionInstance = evolutionInstances.find(evo => {
-				const evoData = evo.instance || evo;
-				const evoName = evoData.instanceName || evoData.name;
-				return evoName === inbox.name;
+		try {
+			showAlert('Carregando instâncias...', 'info');
+			
+			// Buscar dados do Chatwoot e Evolution
+			const [chatwootResult, evolutionResult] = await Promise.all([
+				listChatwootInboxes.run(),
+				listEvolutionInstances.run()
+			]);
+			
+			const chatwootInboxes = chatwootResult.payload || chatwootResult;
+			const evolutionInstances = Array.isArray(evolutionResult) ? evolutionResult : [];
+			
+			// Combinar dados e buscar settings
+			const instancesPromises = chatwootInboxes.map(async inbox => {
+				const evolutionInstance = evolutionInstances.find(evo => {
+					const evoData = evo.instance || evo;
+					const evoName = evoData.instanceName || evoData.name;
+					return evoName === inbox.name;
+				});
+				
+				if (evolutionInstance) {
+					const evoData = evolutionInstance.instance || evolutionInstance;
+					const status = evoData.status || evoData.connectionStatus || 'unknown';
+					
+					// Buscar settings da instância
+					let groupsBlocked = false;
+					try {
+						const settings = await getInstanceSettings.run({
+							instanceName: inbox.name
+						});
+						
+						// Formato da resposta: {groupsIgnore: true, rejectCall: false, ...}
+						groupsBlocked = settings?.groupsIgnore === true;
+						
+						console.log(`🚫 ${inbox.name} - Grupos bloqueados:`, groupsBlocked);
+						
+					} catch (error) {
+						console.warn(`Não foi possível buscar settings de ${inbox.name}:`, error);
+					}
+					
+					return {
+						name: inbox.name,
+						chatwoot_id: inbox.id,
+						chatwoot_channel_type: inbox.channel_type,
+						evolution_status: status,
+						evolution_owner: evoData.owner || null,
+						evolution_profile_name: evoData.profileName || null,
+						evolution_profile_picture: evoData.profilePictureUrl || null,
+						connected: status === 'open',
+						has_evolution: true,
+						groups_blocked: groupsBlocked
+					};
+				} else {
+					return {
+						name: inbox.name,
+						chatwoot_id: inbox.id,
+						chatwoot_channel_type: inbox.channel_type,
+						evolution_status: 'not_found',
+						evolution_owner: null,
+						evolution_profile_name: null,
+						evolution_profile_picture: null,
+						connected: false,
+						has_evolution: false,
+						groups_blocked: null
+					};
+				}
 			});
 			
-			if (evolutionInstance) {
-				const evoData = evolutionInstance.instance || evolutionInstance;
-				const status = evoData.status || evoData.connectionStatus || 'unknown';
-				
-				// Buscar settings da instância
-				let groupsBlocked = null;
-				try {
-					const settings = await getInstanceSettings.run({
-						instanceName: inbox.name
-					});
-					groupsBlocked = settings?.settings?.groupsIgnore || false;
-				} catch (error) {
-					console.warn(`Não foi possível buscar settings de ${inbox.name}:`, error);
-				}
-				
-				return {
-					name: inbox.name,
-					chatwoot_id: inbox.id,
-					chatwoot_channel_type: inbox.channel_type,
-					evolution_status: status,
-					evolution_owner: evoData.owner || null,
-					evolution_profile_name: evoData.profileName || null,
-					evolution_profile_picture: evoData.profilePictureUrl || null,
-					connected: status === 'open',
-					has_evolution: true,
-					groups_blocked: groupsBlocked
-				};
-			} else {
-				return {
-					name: inbox.name,
-					chatwoot_id: inbox.id,
-					chatwoot_channel_type: inbox.channel_type,
-					evolution_status: 'not_found',
-					evolution_owner: null,
-					evolution_profile_name: null,
-					evolution_profile_picture: null,
-					connected: false,
-					has_evolution: false,
-					groups_blocked: null
-				};
-			}
-		});
-		
-		const instances = await Promise.all(instancesPromises);
-		
-		// Salvar no store
-		await storeValue('instances', instances);
-		
-		showAlert(`${instances.length} instância(s) encontrada(s)`, 'success');
-		return instances;
-		
-	} catch (error) {
-		console.error('Erro ao buscar instâncias:', error);
-		showAlert('Erro ao buscar instâncias: ' + error.message, 'error');
-		return [];
-	}
-},
+			const instances = await Promise.all(instancesPromises);
+			
+			// Salvar no store
+			await storeValue('instances', instances);
+			
+			showAlert(`${instances.length} instância(s) encontrada(s)`, 'success');
+			return instances;
+			
+		} catch (error) {
+			console.error('Erro ao buscar instâncias:', error);
+			showAlert('Erro ao buscar instâncias: ' + error.message, 'error');
+			return [];
+		}
+	},
 	
 	// ============================================
 	// CRIAR INSTÂNCIA
@@ -220,47 +229,20 @@ export default {
 				instanceName: instanceName
 			});
 			
-			// DEBUG: Ver o que a API retornou
-			console.log('🔍 RESPOSTA COMPLETA DA API:', JSON.stringify(result, null, 2));
+			console.log('🔍 Resposta da API:', result);
 			
-			// Tentar diferentes formatos de resposta da Evolution API
-			let base64Image = null;
+			// Extrair base64
+			let base64Image = result?.base64 || result?.qrcode?.base64 || result?.qr?.base64 || result?.qr || result;
 			
-			// Formato 1: {base64: "..."}
-			if (result && result.base64) {
-				base64Image = result.base64;
-				console.log('✅ Formato 1: result.base64');
+			// Remover o prefixo se vier da API
+			if (base64Image && base64Image.startsWith('data:image/png;base64,')) {
+				base64Image = base64Image.replace('data:image/png;base64,', '');
 			}
-			// Formato 2: {qrcode: {base64: "..."}}
-			else if (result && result.qrcode && result.qrcode.base64) {
-				base64Image = result.qrcode.base64;
-				console.log('✅ Formato 2: result.qrcode.base64');
-			}
-			// Formato 3: {qr: {base64: "..."}}
-			else if (result && result.qr && result.qr.base64) {
-				base64Image = result.qr.base64;
-				console.log('✅ Formato 3: result.qr.base64');
-			}
-			// Formato 4: String pura
-			else if (typeof result === 'string' && result.startsWith('iVBOR')) {
-				base64Image = result;
-				console.log('✅ Formato 4: String pura');
-			}
-			// Formato 5: {pairingCode: "...", qr: {base64: "..."}}
-			else if (result && result.qr) {
-				base64Image = result.qr;
-				console.log('✅ Formato 5: result.qr direto');
-			}
-			
-			console.log('📷 Base64 extraído:', base64Image ? `${base64Image.substring(0, 50)}...` : 'NÃO ENCONTRADO');
-			console.log('📏 Tamanho do base64:', base64Image ? base64Image.length : 0);
 			
 			if (base64Image && base64Image.length > 100) {
-				// Salvar no store
+				// Salvar no store (SEM o prefixo)
 				await storeValue('currentQRCode', base64Image);
 				await storeValue('currentInstanceName', instanceName);
-				
-				console.log('💾 Salvou no store!');
 				
 				// Abrir modal
 				showModal('mdl_qrCode');
@@ -270,9 +252,7 @@ export default {
 				showAlert('✅ Instância já está conectada!', 'success');
 				
 			} else {
-				console.error('❌ ERRO: Nenhum base64 válido encontrado');
-				console.error('📋 Estrutura completa:', result);
-				showAlert('⚠️ QR Code não disponível. Veja o console (F12) para detalhes.', 'warning');
+				showAlert('⚠️ QR Code não disponível', 'warning');
 			}
 			
 		} catch (error) {
@@ -281,48 +261,51 @@ export default {
 		}
 	},
 	
-// ============================================
-// TOGGLE BLOQUEIO DE GRUPOS
-// ============================================
-
-toggleBlockGroups: async (instanceName) => {
-	try {
-		showAlert('🔍 Verificando configurações...', 'info');
-		
-		// Buscar configurações atuais
-		const settings = await getInstanceSettings.run({
-			instanceName: instanceName
-		});
-		
-		console.log('⚙️ Configurações atuais:', settings);
-		
-		// Verificar se grupos estão bloqueados
-		const isBlocked = settings?.settings?.groupsIgnore === true;
-		
-		if (isBlocked) {
-			// Desbloquear
-			showAlert('🔓 Desbloqueando grupos...', 'info');
-			await unblockGroups.run({
+	// ============================================
+	// TOGGLE BLOQUEIO DE GRUPOS
+	// ============================================
+	
+	toggleBlockGroups: async (instanceName) => {
+		try {
+			showAlert('🔍 Verificando configurações...', 'info');
+			
+			// Buscar configurações atuais
+			const settings = await getInstanceSettings.run({
 				instanceName: instanceName
 			});
-			showAlert('✅ Grupos desbloqueados com sucesso!', 'success');
-		} else {
-			// Bloquear
-			showAlert('🚫 Bloqueando grupos...', 'info');
-			await blockGroups.run({
-				instanceName: instanceName
-			});
-			showAlert('✅ Grupos bloqueados com sucesso!', 'success');
+			
+			console.log('⚙️ Configurações atuais:', settings);
+			
+			// Verificar se grupos estão bloqueados
+			// Formato: {groupsIgnore: true, rejectCall: false, ...}
+			const isBlocked = settings?.groupsIgnore === true;
+			
+			console.log('🔍 Grupos bloqueados:', isBlocked);
+			
+			if (isBlocked) {
+				// Desbloquear
+				showAlert('🔓 Desbloqueando grupos...', 'info');
+				await unblockGroups.run({
+					instanceName: instanceName
+				});
+				showAlert('✅ Grupos desbloqueados com sucesso!', 'success');
+			} else {
+				// Bloquear
+				showAlert('🚫 Bloqueando grupos...', 'info');
+				await blockGroups.run({
+					instanceName: instanceName
+				});
+				showAlert('✅ Grupos bloqueados com sucesso!', 'success');
+			}
+			
+			// Recarregar lista para atualizar o status
+			await this.getAllInstances();
+			
+		} catch (error) {
+			console.error('Erro ao alternar bloqueio de grupos:', error);
+			showAlert('❌ Erro: ' + error.message, 'error');
 		}
-		
-		// Recarregar lista para atualizar o status
-		await this.getAllInstances();
-		
-	} catch (error) {
-		console.error('Erro ao alternar bloqueio de grupos:', error);
-		showAlert('❌ Erro: ' + error.message, 'error');
-	}
-},
+	},
 	
 	// ============================================
 	// HELPERS
