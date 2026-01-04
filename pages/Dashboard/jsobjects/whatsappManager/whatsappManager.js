@@ -202,31 +202,37 @@ export default {
 	// ============================================
 	
 	getQRCode: async (instanceName) => {
-		try {
-			showAlert('Buscando QR Code...', 'info');
+	try {
+		showAlert('📱 Buscando QR Code...', 'info');
+		
+		const result = await getInstanceQRCode.run({
+			instanceName: instanceName
+		});
+		
+		if (result && result.base64) {
+			// Salvar no store
+			await storeValue('currentQRCode', result.base64);
+			await storeValue('currentInstanceName', instanceName);
 			
-			const result = await getInstanceQRCode.run({
-				instanceName: instanceName
-			});
+			// Abrir modal
+			showModal('mdl_qrCode');
+			showAlert('✅ QR Code obtido! Escaneie para conectar.', 'success');
 			
-			if (result && result.base64) {
-				// Salvar QR code no store
-				await storeValue('currentQRCode', result.base64);
-				await storeValue('currentInstanceName', instanceName);
-				
-				// Abrir modal com QR Code
-				showModal('mdl_qrcode');
-			} else if (result && result.code === 'INSTANCE_ALREADY_CONNECTED') {
-				showAlert('Instância já está conectada!', 'success');
-			} else {
-				showAlert('QR Code não disponível', 'warning');
-			}
+		} else if (result && result.code === 'INSTANCE_ALREADY_CONNECTED') {
+			showAlert('✅ Instância já está conectada!', 'success');
 			
-		} catch (error) {
-			console.error('Erro ao buscar QR Code:', error);
-			showAlert('Erro ao buscar QR Code: ' + error.message, 'error');
+		} else if (result && result.message) {
+			showAlert('⚠️ ' + result.message, 'warning');
+			
+		} else {
+			showAlert('⚠️ QR Code não disponível', 'warning');
 		}
-	},
+		
+	} catch (error) {
+		console.error('Erro ao buscar QR Code:', error);
+		showAlert('❌ Erro ao buscar QR Code: ' + error.message, 'error');
+	}
+},
 	
 	// ============================================
 	// HELPERS
