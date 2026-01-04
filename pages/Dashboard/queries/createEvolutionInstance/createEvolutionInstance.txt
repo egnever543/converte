@@ -1,0 +1,11 @@
+{
+  "instanceName": "{{this.params.instanceName}}",
+  "qrcode": true,
+  "integration": "WHATSAPP-BAILEYS",
+  "chatwootAccountId": "{{getUserData.data[0]?.id_chatwoot}}",
+  "chatwootToken": "{{getUserData.data[0]?.token_chatwoot}}",
+  "chatwootUrl": "https://convertechat.com.br",
+  "chatwootSignMsg": true,
+  "chatwootReopenConversation": true,
+  "chatwootConversationPending": true
+}

@@ -1,0 +1,20 @@
+{
+  "gitSyncId": "695120f12f759c6ceec4ba2f_781f5d6d-31e6-4ea2-af34-4bf6800d90a7",
+  "id": "Dashboard_whatsappManager",
+  "unpublishedCollection": {
+    "name": "whatsappManager",
+    "pageId": "Dashboard",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": [
+      {
+        "name": "EVOLUTION_URL",
+        "value": "'https://evolution-evolution-api.htbm6j.easypanel.host'"
+      },
+      {
+        "name": "EVOLUTION_API_KEY",
+        "value": "'429683C4C977415CAAFCCE10F7D57E11'"
+      }
+    ]
+  }
+}
