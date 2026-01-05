@@ -25,7 +25,7 @@
     "fullyQualifiedName": "fetchInstances.getData",
     "name": "getData",
     "pageId": "Dashboard",
-    "runBehaviour": "ON_PAGE_LOAD",
+    "runBehaviour": "MANUAL",
     "userSetOnLoad": true
   }
 }
