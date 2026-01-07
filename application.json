@@ -1,7 +1,7 @@
 {
   "appIsExample": false,
   "appLayout": {
-    "type": "DESKTOP"
+    "type": "MOBILE"
   },
   "applicationDetail": {
     "appPositioning": {
@@ -44,7 +44,7 @@
     }
   ],
   "unpublishedAppLayout": {
-    "type": "DESKTOP"
+    "type": "MOBILE"
   },
   "unpublishedApplicationDetail": {
     "appPositioning": {
