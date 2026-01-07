@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "0.375rem",
-  "bottomRow": 29,
+  "bottomRow": 34,
   "boxShadow": "none",
   "buttonColor": "#3b82f6",
   "buttonVariant": "PRIMARY",
@@ -44,7 +44,7 @@
   "responsiveBehavior": "hug",
   "rightColumn": 40,
   "text": "GERAR COBRANÇA R$ 190,00",
-  "topRow": 25,
+  "topRow": 30,
   "type": "BUTTON_WIDGET",
   "version": 1,
   "widgetId": "ll85556vgf",

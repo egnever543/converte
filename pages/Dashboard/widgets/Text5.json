@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 6,
+  "bottomRow": 12,
   "dynamicBindingPathList": [
     {
       "key": "truncateButtonColor"
@@ -33,7 +33,7 @@
   "mobileRightColumn": 50,
   "mobileTopRow": 1,
   "needsErrorInfo": false,
-  "originalBottomRow": 5,
+  "originalBottomRow": 6,
   "originalTopRow": 1,
   "overflow": "NONE",
   "parentColumnSpace": 19.8125,
@@ -43,7 +43,7 @@
   "responsiveBehavior": "fill",
   "rightColumn": 52,
   "shouldTruncate": false,
-  "text": "💰 Saldo Disponível: {{getTokensBalance.data[0]?.tokens || '0.00'}} créditos\n\n",
+  "text": "💰 Saldo Disponível IA: {{getTokensBalance.data[0]?.tokens || '0.00'}} créditos\n\n",
   "textAlign": "CENTER",
   "textColor": "#231F20",
   "topRow": 1,
