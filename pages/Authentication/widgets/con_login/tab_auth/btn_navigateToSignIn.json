@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 60,
+  "bottomRow": 61,
   "boxShadow": "none",
   "buttonColor": "{{appsmith.theme.colors.primaryColor}}",
   "buttonVariant": "TERTIARY",
@@ -59,7 +59,7 @@
     "Buttons"
   ],
   "text": "Already have an account? Sign In",
-  "topRow": 56,
+  "topRow": 57,
   "type": "BUTTON_WIDGET",
   "version": 1,
   "widgetId": "at7txr50lc",

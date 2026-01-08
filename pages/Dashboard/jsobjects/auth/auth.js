@@ -1,4 +1,66 @@
 export default {
+	supabaseConfig: {
+		url: 'https://ia-supabase.htbm6j.easypanel.host/rest/v1',
+		apikey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE',
+		authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE'
+	},
+
+	// Função auxiliar para atualizar usuário no Supabase
+	updateUserSupabase: async (email, updateData) => {
+		try {
+			const response = await fetch(
+				`${this.supabaseConfig.url}/cadastros?email=eq.${encodeURIComponent(email)}`,
+				{
+					method: 'PATCH',
+					headers: {
+						'apikey': this.supabaseConfig.apikey,
+						'Authorization': `Bearer ${this.supabaseConfig.authToken}`,
+						'Content-Type': 'application/json',
+						'Prefer': 'return=representation'
+					},
+					body: JSON.stringify(updateData)
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('Error updating user in Supabase:', error);
+			throw error;
+		}
+	},
+
+	// Função auxiliar para buscar usuário por email
+	getUserByEmailSupabase: async (email) => {
+		try {
+			const response = await fetch(
+				`${this.supabaseConfig.url}/cadastros?email=eq.${encodeURIComponent(email)}&select=*`,
+				{
+					method: 'GET',
+					headers: {
+						'apikey': this.supabaseConfig.apikey,
+						'Authorization': `Bearer ${this.supabaseConfig.authToken}`,
+						'Content-Type': 'application/json'
+					}
+				}
+			);
+
+			if (!response.ok) {
+				throw new Error(`HTTP error! status: ${response.status}`);
+			}
+
+			const data = await response.json();
+			return data;
+		} catch (error) {
+			console.error('Error fetching user from Supabase:', error);
+			throw error;
+		}
+	},
+
 	checkAuth: async () => {
 		const token = appsmith.store.token;
 		
@@ -8,24 +70,28 @@ export default {
 			return false;
 		}
 		
-		// NOVO: Verificar e criar customer no Asaas se necessário
+		// Verificar e criar customer no Asaas se necessário
 		this.ensureAsaasCustomer();
 		
 		return true;
 	},
 	
-	// NOVA FUNÇÃO: Garantir que o customer existe no Asaas
+	// Garantir que o customer existe no Asaas
 	ensureAsaasCustomer: async () => {
 		try {
-			// Aguardar um pouco para getUserData carregar
-			await new Promise(resolve => setTimeout(resolve, 500));
+			const user = this.getUser();
 			
-			const userData = getUserData.data;
+			if (!user || !user.email) {
+				console.log('❌ Dados do usuário inválidos');
+				return null;
+			}
+
+			// Buscar dados do usuário no Supabase
+			const userData = await this.getUserByEmailSupabase(user.email);
 			
-			// Verificar se getUserData retornou dados
 			if (!userData || userData.length === 0) {
-				console.log('Nenhum dado do usuário encontrado');
-				return;
+				console.log('❌ Nenhum dado do usuário encontrado');
+				return null;
 			}
 			
 			const userInfo = userData[0];
@@ -38,42 +104,30 @@ export default {
 
 			// Se não tem, criar agora (cliente antigo)
 			console.log('⚠️ Cliente antigo detectado! Criando customer no Asaas...');
-			const user = this.getUser();
 			
-			if (!user || !user.email) {
-				console.error('❌ Dados do usuário inválidos');
-				return null;
-			}
-
 			// Criar customer no Asaas
 			const customer = await createAsaasCustomer.run({
 				name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email.split('@')[0],
 				email: user.email,
-				cpfCnpj: "00000000000", // Será preenchido depois
-				mobilePhone: "00000000000" // Será preenchido depois
+				cpfCnpj: "00000000000",
+				mobilePhone: "00000000000"
 			});
-
+			
 			console.log('✅ Cliente Asaas criado:', customer);
-
-			// Salvar na planilha
-			await updateUserIntegrations.run({
+			
+			// Atualizar no Supabase
+			await this.updateUserSupabase(user.email, {
 				asaas_customer_id: customer.id,
-				payment_day: 10, // Dia padrão de vencimento
+				payment_day: '10',
 				payment_status: "Não configurado"
 			});
-
-			// Recarregar dados do usuário
-			await getUserData.run();
-
-			console.log('✅ Dados atualizados na planilha');
+			
+			console.log('✅ Dados atualizados no Supabase');
 			showAlert('Cadastro de pagamento configurado!', 'success');
 			
 			return customer.id;
-
 		} catch (error) {
 			console.error('❌ Erro ao verificar/criar customer:', error);
-			// Não mostrar erro pro usuário, apenas logar
-			// O customer será criado quando ele tentar gerar a cobrança
 			console.log('Customer será criado na primeira cobrança');
 			return null;
 		}

@@ -1,0 +1,12 @@
+{
+  "id_chatwoot": "{{inp_id_chatwoot.text}}",
+  "first_name": "{{inp_firstName.text}}",
+  "last_name": "{{inp_lastName.text}}",
+  "email": "{{inp_registerEmail.text}}",
+  "password_hash": "{{this.params.passwordHash}}",
+  "role": "Admin",
+  "payment_day": "10",
+  "payment_status": "Não configurado",
+  "status_ia": "ativo",
+  "created_at": "{{new Date().toISOString()}}"
+}

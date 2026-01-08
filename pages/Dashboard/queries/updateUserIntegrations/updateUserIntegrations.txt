@@ -1,0 +1,8 @@
+{
+  "token_chatwoot": "{{inp_token_chatwoot.text}}",
+  "appkey": "{{inp_appkey.text}}",
+  "authkey": "{{inp_authkey.text}}",
+  "script_url": "{{inp_script_url.text}}",
+  "grupo": "{{inp_grupo.text}}",
+  "id_sigma": "{{inp_id_sigma.text}}"
+}
