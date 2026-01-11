@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 18,
+  "bottomRow": 13,
   "dynamicBindingPathList": [
     {
       "key": "truncateButtonColor"
@@ -54,7 +54,7 @@
   "text": "Status: {{getUserData.data[0]?.payment_status || 'Não configurado'}}",
   "textAlign": "CENTER",
   "textColor": "{{getUserData.data[0]?.payment_status === 'Pago' ? '#22c55e' : getUserData.data[0]?.payment_status === 'Vencido' ? '#ef4444' : '#f59e0b'}}",
-  "topRow": 13,
+  "topRow": 9,
   "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
   "type": "TEXT_WIDGET",
   "version": 1,

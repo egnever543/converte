@@ -2,7 +2,7 @@
   "accentColor": "{{appsmith.theme.colors.primaryColor}}",
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 29,
+  "bottomRow": 24,
   "boxShadow": "none",
   "defaultOptionValue": "GREEN",
   "dynamicBindingPathList": [
@@ -53,7 +53,7 @@
   "rightColumn": 62,
   "serverSideFiltering": false,
   "sourceData": "[\n  {\n    \"label\": \"PIX\",\n    \"value\": \"PIX\"\n  }\n]",
-  "topRow": 22,
+  "topRow": 17,
   "type": "SELECT_WIDGET",
   "version": 1,
   "widgetId": "j0uarl6q28",
