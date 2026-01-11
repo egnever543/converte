@@ -11,7 +11,7 @@
           "value": "application/json"
         }
       ],
-      "body": "{\n  \"instanceName\": \"{{this.params.instanceName}}\",\n  \"qrcode\": true,\n  \"integration\": \"WHATSAPP-BAILEYS\",\n  \"chatwootAccountId\": \"{{getUserData.data[0]?.id_chatwoot}}\",\n  \"chatwootToken\": \"{{getUserData.data[0]?.token_chatwoot}}\",\n  \"chatwootUrl\": \"https://convertechat.com.br\",\n  \"chatwootSignMsg\": true,\n  \"chatwootReopenConversation\": true,\n  \"chatwootConversationPending\": true\n}",
+      "body": "{\n  \"instanceName\": \"{{inp_newInstanceName.text}}\",\n  \"qrcode\": true,\n  \"integration\": \"WHATSAPP-BAILEYS\",\n  \"chatwootAccountId\": \"{{String(getUserData.data[0]?.id_chatwoot)}}\",\n  \"chatwootToken\": \"{{getUserData.data[0]?.token_chatwoot}}\",\n  \"chatwootUrl\": \"https://convertechat.com.br\",\n  \"chatwootSignMsg\": true,\n  \"chatwootReopenConversation\": true,\n  \"chatwootConversationPending\": true\n}",
       "bodyFormData": [],
       "encodeParamsToggle": true,
       "formData": {

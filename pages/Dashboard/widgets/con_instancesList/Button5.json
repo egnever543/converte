@@ -11,7 +11,11 @@
       "key": "buttonColor"
     }
   ],
-  "dynamicPropertyPathList": [],
+  "dynamicPropertyPathList": [
+    {
+      "key": "onClick"
+    }
+  ],
   "dynamicTriggerPathList": [
     {
       "key": "onClick"
@@ -31,7 +35,7 @@
   "mobileRightColumn": 62,
   "mobileTopRow": 5,
   "needsErrorInfo": false,
-  "onClick": "{{whatsappManager.createInstance();}}",
+  "onClick": "{{whatsappManager.createInstance(inp_newInstanceName.text)}}",
   "parentColumnSpace": 19.5,
   "parentId": "5y9sfgw9d9",
   "parentRowSpace": 10,

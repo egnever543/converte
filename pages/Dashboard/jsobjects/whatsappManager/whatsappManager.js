@@ -109,34 +109,43 @@ export default {
 	// CRIAR INSTÂNCIA
 	// ============================================
 	
-	createInstance: async (instanceName) => {
-		try {
-			if (!instanceName || instanceName.trim() === '') {
-				showAlert('Digite um nome para a instância', 'warning');
-				return;
-			}
-			
-			showAlert('Criando instância...', 'info');
-			
-			const result = await createEvolutionInstance.run({
-				instanceName: instanceName.trim()
-			});
-			
-			if (result) {
-				showAlert('Instância criada! A inbox no Chatwoot foi criada automaticamente.', 'success');
-				
-				// Recarregar lista
-				await this.getAllInstances();
-				
-				// Limpar input
-				resetWidget('inp_newInstanceName');
-			}
-			
-		} catch (error) {
-			console.error('Erro ao criar instância:', error);
-			showAlert('Erro ao criar instância: ' + error.message, 'error');
-		}
-	},
+createInstance: async (instanceName) => {
+  try {
+    const name = (instanceName || '').trim();
+    
+    if (!name) {
+      showAlert('Digite o número da instância', 'warning');
+      return;
+    }
+    
+    const userData = getUserData.data?.[0];
+    
+    if (!userData || !userData.id_chatwoot || !userData.token_chatwoot) {
+      showAlert('❌ Dados do usuário não carregados. Recarregue a página.', 'error');
+      return;
+    }
+    
+    console.log('📱 Criando instância:', name);
+    
+    showAlert('Criando instância...', 'info');
+    
+    const result = await createEvolutionInstance.run({
+      instanceName: name
+    });
+    
+    console.log('✅ Resultado:', result);
+    
+    if (result) {
+      showAlert('✅ Instância criada! Inbox criada no Chatwoot.', 'success');
+      await this.getAllInstances();
+      resetWidget('inp_newInstanceName');
+    }
+    
+  } catch (error) {
+    console.error('❌ Erro:', error);
+    showAlert('❌ Erro ao criar instância. Veja o console.', 'error');
+  }
+},
 	
 	// ============================================
 	// DELETAR INSTÂNCIA
