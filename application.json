@@ -41,6 +41,10 @@
     {
       "id": "Dashboard",
       "isDefault": false
+    },
+    {
+      "id": "IA",
+      "isDefault": false
     }
   ],
   "unpublishedAppLayout": {

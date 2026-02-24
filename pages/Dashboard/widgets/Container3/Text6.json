@@ -1,7 +1,7 @@
 {
   "animateLoading": true,
   "borderRadius": "{{appsmith.theme.borderRadius.appBorderRadius}}",
-  "bottomRow": 5,
+  "bottomRow": 4,
   "dynamicBindingPathList": [
     {
       "key": "truncateButtonColor"
@@ -11,9 +11,6 @@
     },
     {
       "key": "borderRadius"
-    },
-    {
-      "key": "text"
     }
   ],
   "dynamicHeight": "AUTO_HEIGHT",
@@ -23,33 +20,33 @@
   "fontStyle": "BOLD",
   "isLoading": false,
   "isVisible": true,
-  "key": "h9eb197e2d",
-  "leftColumn": 2,
+  "key": "oa61ghcjj3",
+  "leftColumn": 23,
   "maxDynamicHeight": 9000,
   "minDynamicHeight": 4,
   "minWidth": 450,
-  "mobileBottomRow": 5,
+  "mobileBottomRow": 4,
   "mobileLeftColumn": 22,
   "mobileRightColumn": 38,
-  "mobileTopRow": 1,
+  "mobileTopRow": 0,
   "needsErrorInfo": false,
-  "originalBottomRow": 5,
-  "originalTopRow": 1,
+  "originalBottomRow": 4,
+  "originalTopRow": 0,
   "overflow": "NONE",
-  "parentColumnSpace": 19.8125,
-  "parentId": "0",
+  "parentColumnSpace": 6.53125,
+  "parentId": "n1wueiqj0l",
   "parentRowSpace": 10,
   "renderMode": "CANVAS",
   "responsiveBehavior": "fill",
-  "rightColumn": 32,
+  "rightColumn": 39,
   "shouldTruncate": false,
-  "text": "Bem vindo, {{auth.getUser()?.first_name || 'User'}}!",
-  "textAlign": "CENTER",
+  "text": "Ajustar IA",
+  "textAlign": "LEFT",
   "textColor": "#231F20",
-  "topRow": 1,
+  "topRow": 0,
   "truncateButtonColor": "{{appsmith.theme.colors.primaryColor}}",
   "type": "TEXT_WIDGET",
   "version": 1,
-  "widgetId": "5u6uq21ie1",
-  "widgetName": "Text1"
+  "widgetId": "jyd6xa95xy",
+  "widgetName": "Text6"
 }

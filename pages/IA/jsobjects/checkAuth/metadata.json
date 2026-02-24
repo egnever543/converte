@@ -1,0 +1,11 @@
+{
+  "gitSyncId": "695120f12f759c6ceec4ba2f_41c60d84-49db-4049-bf89-cf1c108bbfe2",
+  "id": "IA_checkAuth",
+  "unpublishedCollection": {
+    "name": "checkAuth",
+    "pageId": "IA",
+    "pluginId": "js-plugin",
+    "pluginType": "JS",
+    "variables": []
+  }
+}

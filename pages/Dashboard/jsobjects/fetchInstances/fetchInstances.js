@@ -1,5 +1,5 @@
 export default {
-	getData: async () => {
-		return await whatsappManager.getAllInstances();
-	}
+    getData: async () => {
+        return await whatsappManager.getAllInstances();
+    }
 }
